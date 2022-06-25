@@ -14,6 +14,8 @@
     "start": "npx serve ."
   },
   "devDependencies": {
-    "assemblyscript": "^0.20.13"
+    "as-wasi": "^0.4.6",
+    "assemblyscript": "^0.20.13",
+    "assemblyscript-json": "^1.1.0"
   }
 }

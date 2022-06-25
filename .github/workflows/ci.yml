@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn && yarn asbuild
+      - run: |
+          wget https://github.com/Shopify/function-runner/releases/download/v3.0.0/function-runner-x86_64-linux-v3.0.0.gz
+          gunzip function-runner-x86_64-linux-v3.0.0.gz
+          chmod 700 function-runner-x86_64-linux-v3.0.0
+          echo {} > input.json
+          ./function-runner-x86_64-linux-v3.0.0 -f ./build/release.wasm ./input.json

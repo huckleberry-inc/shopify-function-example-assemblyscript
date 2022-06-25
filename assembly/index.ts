@@ -1,5 +1,33 @@
-// The entry file of your WebAssembly module.
+import "wasi";
+import { Console } from "as-wasi/assembly";
+import { JSON } from "assemblyscript-json/assembly"; 
 
-export function add(a: i32, b: i32): i32 {
-  return a + b;
+function main ():void {
+  const input = Console.readAll();
+  const _config = <JSON.Obj>(JSON.parse(input));
+  
+  // Change code here
+  
+  Console.log(`{
+    "discountApplicationStrategy": "FIRST",
+    "discounts": [
+      {
+        "value": {
+          "percentage": {
+            "value": 10
+          }
+        },
+        "targets": [
+          {
+            "orderSubtotal": {
+              "excludedVariantIds": []
+            }
+          }
+        ],
+        "message": "10% off"
+      }
+    ]
+  }`);
 }
+
+main()
