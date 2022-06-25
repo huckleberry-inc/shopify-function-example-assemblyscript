@@ -1,0 +1,6 @@
+{
+  "extends": "../../../.nodenv/versions/16.13.0/lib/node_modules/assemblyscript/std/assembly.json",
+  "include": [
+    "./**/*.ts"
+  ]
+}
