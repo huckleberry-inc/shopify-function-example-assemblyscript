@@ -4,9 +4,20 @@ import { JSON } from "assemblyscript-json/assembly";
 
 function main ():void {
   const input = Console.readAll();
-  const _config = <JSON.Obj>(JSON.parse(input));
-  
-  // Change code here
+  const config = <JSON.Obj>(JSON.parse(input));
+  const lines = config.getObj("cart")!.getArr("lines")!
+  const totalQuantity = lines.valueOf()
+    .map<i64>((line) => (<JSON.Obj>line).getInteger("quantity")!.valueOf())
+    .reduce((sum, current) => sum + current, 0 as i64);
+
+  if (totalQuantity < 3) {
+    Console.log(`{
+      "discountApplicationStrategy": "FIRST",
+      "discounts": []
+    }`);
+
+    return
+  }
   
   Console.log(`{
     "discountApplicationStrategy": "FIRST",
