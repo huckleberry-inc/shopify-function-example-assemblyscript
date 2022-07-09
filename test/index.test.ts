@@ -9,7 +9,7 @@ test('no discounts', () => {
     }
   }))
 
-  expect(JSON.parse(output.toString())).toStrictEqual({                                                                                                                                                     
+  expect(JSON.parse(output)).toStrictEqual({                                                                                                                                                     
     "discountApplicationStrategy": "FIRST",
     "discounts": [],
   });
@@ -25,7 +25,7 @@ test('discounts', () => {
     }
   }))
 
-  expect(JSON.parse(output.toString())).toStrictEqual({
+  expect(JSON.parse(output)).toStrictEqual({
     "discountApplicationStrategy": "FIRST",
     "discounts": [
       {

@@ -11,5 +11,5 @@ export const functionRunner = (input: string) => {
   const output = outputByFunctionRunner();
   reset()
 
-  return output
+  return output.toString()
 };
