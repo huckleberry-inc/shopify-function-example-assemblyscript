@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "exports": {
     ".": {
       "import": "./build/release.js",
@@ -10,12 +9,15 @@
     "asbuild:debug": "asc assembly/index.ts --target debug",
     "asbuild:release": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:debug && npm run asbuild:release",
-    "test": "node tests",
+    "test": "jest",
     "start": "npx serve ."
   },
   "devDependencies": {
+    "@types/jest": "^28.1.4",
     "as-wasi": "^0.4.6",
     "assemblyscript": "^0.20.13",
-    "assemblyscript-json": "^1.1.0"
+    "assemblyscript-json": "^1.1.0",
+    "jest": "^28.1.2",
+    "ts-jest": "^28.0.5"
   }
 }

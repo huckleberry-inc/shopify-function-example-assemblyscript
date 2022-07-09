@@ -2,8 +2,7 @@ import "wasi";
 import { Console } from "as-wasi/assembly";
 import { JSON } from "assemblyscript-json/assembly"; 
 
-function main ():void {
-  const input = Console.readAll();
+const customDiscount = (input: string): string => {
   const config = <JSON.Obj>(JSON.parse(input));
   const lines = config.getObj("cart")!.getArr("lines")!
   const totalQuantity = lines.valueOf()
@@ -11,15 +10,13 @@ function main ():void {
     .reduce((sum, current) => sum + current, 0 as i64);
 
   if (totalQuantity < 3) {
-    Console.log(`{
+    return `{
       "discountApplicationStrategy": "FIRST",
       "discounts": []
-    }`);
-
-    return
+    }`;
   }
   
-  Console.log(`{
+  return `{
     "discountApplicationStrategy": "FIRST",
     "discounts": [
       {
@@ -38,7 +35,9 @@ function main ():void {
         "message": "10% off"
       }
     ]
-  }`);
+  }`;
 }
 
-main()
+const input = Console.readAll()!;
+const output = customDiscount(input)
+Console.log(output);
