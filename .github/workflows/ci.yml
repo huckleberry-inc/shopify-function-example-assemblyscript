@@ -19,8 +19,10 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
       - run: yarn && yarn asbuild
       - run: |
-          wget https://github.com/Shopify/function-runner/releases/download/v3.0.0/function-runner-x86_64-linux-v3.0.0.gz
-          gunzip function-runner-x86_64-linux-v3.0.0.gz
-          chmod 700 function-runner-x86_64-linux-v3.0.0
-          ./function-runner-x86_64-linux-v3.0.0 -f ./build/release.wasm ./input.json
-          test $(./function-runner-x86_64-linux-v3.0.0 -f ./build/release.wasm ./input.json -j | jq '.size') -lt 256000
+          wget https://github.com/Shopify/function-runner/releases/download/v3.1.0/function-runner-x86_64-linux-v3.1.0.gz
+          gunzip function-runner-x86_64-linux-v3.1.0.gz
+          chmod 700 function-runner-x86_64-linux-v3.1.0
+          mv function-runner-x86_64-linux-v3.1.0 function-runner
+          yarn test
+          ./function-runner -f ./build/release.wasm ./input.json
+          test $(./function-runner -f ./build/release.wasm ./input.json -j | jq '.size') -lt 256000
