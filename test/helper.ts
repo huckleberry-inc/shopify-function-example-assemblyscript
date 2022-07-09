@@ -2,11 +2,14 @@ import { execSync } from 'child_process';
 import { writeFileSync, unlinkSync } from 'fs';
 
 const INPUT_FILE_PATH = "./test/input.json";
-export const inputJSONAndOutputByFunctionRunner = (input: string) => {
+export const functionRunner = (input: string) => {
   const createInputFile = (input: string) => writeFileSync(INPUT_FILE_PATH, input);
   const outputByFunctionRunner = () => execSync(`./function-runner -f build/release.wasm ${INPUT_FILE_PATH} -j | jq .output.JsonOutput`)
+  const reset = () => unlinkSync(INPUT_FILE_PATH);
 
   createInputFile(input);
-  return outputByFunctionRunner();
+  const output = outputByFunctionRunner();
+  reset()
+
+  return output
 };
-export const reset = () => unlinkSync(INPUT_FILE_PATH);

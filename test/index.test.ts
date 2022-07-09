@@ -1,9 +1,7 @@
-import { reset, inputJSONAndOutputByFunctionRunner } from './helper';
-
-afterEach(() => reset())
+import { functionRunner } from './helper';
 
 test('no discounts', () => {
-  const output = inputJSONAndOutputByFunctionRunner(JSON.stringify({
+  const output = functionRunner(JSON.stringify({
     "cart": {
       "lines": [
         { "quantity": 1 }
@@ -18,7 +16,7 @@ test('no discounts', () => {
 });
 
 test('discounts', () => {
-  const output = inputJSONAndOutputByFunctionRunner(JSON.stringify({
+  const output = functionRunner(JSON.stringify({
     "cart": {
       "lines": [
         { "quantity": 1 },
