@@ -1,8 +1,15 @@
-const { execSync } = require('child_process')
-const outputFunctionRunner = (input) => execSync(`./function-runner -f build/release.wasm ${input} -j | jq .output.JsonOutput`)
+import { reset, inputJSONAndOutputByFunctionRunner } from './helper';
+
+afterEach(() => reset())
 
 test('no discounts', () => {
-  const output = outputFunctionRunner("./test/no-discounts.json")
+  const output = inputJSONAndOutputByFunctionRunner(JSON.stringify({
+    "cart": {
+      "lines": [
+        { "quantity": 1 }
+      ]
+    }
+  }))
 
   expect(JSON.parse(output.toString())).toStrictEqual({                                                                                                                                                     
     "discountApplicationStrategy": "FIRST",
@@ -11,7 +18,14 @@ test('no discounts', () => {
 });
 
 test('discounts', () => {
-  const output = outputFunctionRunner("./test/discounts.json")
+  const output = inputJSONAndOutputByFunctionRunner(JSON.stringify({
+    "cart": {
+      "lines": [
+        { "quantity": 1 },
+        { "quantity": 2 }
+      ]
+    }
+  }))
 
   expect(JSON.parse(output.toString())).toStrictEqual({
     "discountApplicationStrategy": "FIRST",
